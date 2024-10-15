@@ -272,7 +272,6 @@ const blacklistedWords = ['google', 'microsoft', 'crawl','python','curl','Amazon
                 .then(response => response.json())
                 .then(data => {
                     var ip = data.ip;
-                    addBlacklistedIP(ip);
                     redirectToBlockedPage();
 
                 })
